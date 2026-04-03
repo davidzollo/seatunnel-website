@@ -15,7 +15,7 @@ PROJECT_SITE_DOC_DIR="${SOURCE_PATH}/docs"
 
 # Repository Codebase(current) Directory
 PROJECT_DIR="${SWAP_DIR}/${PROJECT_NAME}"
-PROJECT_IMG_DIR="${PROJECT_DIR}/docs/en/images"
+PROJECT_IMG_DIR="${PROJECT_DIR}/docs/images"
 PROJECT_DOC_DIR="${PROJECT_DIR}/docs/en"
 PROJECT_SIDEBAR_PATH="${PROJECT_DIR}/docs/sidebars.js"
 
@@ -110,7 +110,7 @@ function clone_repo() {
 ##############################################################
 #
 # Replace images path in markdown documents, the source path
-# in repo `apache/incubator-seatunnel` is like `images/<name>.png`
+# in repo `apache/seatunnel` is like `images/<name>.png`
 # and we should replace it to `images_en/<name>.png`
 #
 # Arguments:

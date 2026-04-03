@@ -22,8 +22,8 @@ asf-staging 官网测试环境  通过https://seatunnel.staged.apache.org 访问
 本网站是使用node编译的，使用的是Docusaurus框架组件
 
 1. 下载并安装 nodejs(version>14)
-2. 克隆代码到本地 `git clone  git@github.com:apache/incubator-seatunnel-website.git`
-3. 运行 `./tools/build-docs.sh` 从 **apache/incubator-seatunnel** 中拉取、准备文档。如果想要了解更多细节和操作请阅读[文档如何工作](HOW_DOC_WORK.md)
+2. 克隆代码到本地 `git clone  git@github.com:apache/seatunnel-website.git`
+3. 运行 `./tools/build-docs.sh` 从 **apache/seatunnel** 中拉取、准备文档。如果想要了解更多细节和操作请阅读[文档如何工作](HOW_DOC_WORK.md)
 4. 运行 `npm install` 来安装所需的依赖库。
 5. 在根目录运行`npm run start`，可以访问http://localhost:3000查看站点英文模式预览
 6. 在根目录运行`npm run start-zh`，可以访问http://localhost:3000查看站点的中文模式预览
@@ -134,8 +134,36 @@ css等样式文件放在`src/css`目录下
 ├── team
         ├── index.js
         ├── index.less
-        └── languages.json
+        ├── languages.json
+        └── github-avatars.json
 ```
+
+#### 更新团队成员头像
+
+团队成员头像使用 Base64 编码存储，不依赖外部 GitHub 资源。当有新成员加入或需要更新头像时：
+
+1. 修改 `languages.json`，在 `pmc` 或 `committer` 数组中添加新成员信息：
+
+```json
+{
+  "apacheId": "newmember",
+  "githubId": "newmember",
+  "name": "New Member",
+  "userId": "12345678"  // GitHub 用户 ID（从 https://api.github.com/users/{githubId} 获取）
+}
+```
+
+2. 运行头像获取脚本：
+
+```bash
+node tools/fetch-team-avatars.js
+```
+
+该脚本会：
+- 从 GitHub 下载所有成员头像
+- 转换为 Base64 并保存到 `github-avatars.json`
+- 更新 `languages.json` 中的 `userId` 字段
+
 
 ### 3.7  用户 列表页面修改
 
@@ -167,5 +195,5 @@ css等样式文件放在`src/css`目录下
 
 ### 3.9 为文档添加新版本
 
-- 1、在本地运行 npm run docusaurus docs:version replace_by_target_version 以复制文档。
+- 1、在本地运行 `npm run version replace_by_target_version` 以复制文档。
 - 2、修改 `/src/pages/version/config.json` 中的最新的版本以及历史版本。

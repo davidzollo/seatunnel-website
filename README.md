@@ -22,8 +22,8 @@ asf-staging #The asf-staging official website test environment is accessed throu
 This website is compiled using node, using Docusaurus framework components
 
 1. Download and install nodejs (version>14)
-2. Clone the code to the local `git clone git@github.com:apache/incubator-seatunnel-website.git`
-3. Run `./tools/build-docs.sh` to fetch and prepare docs form **apache/incubator-seatunnel**, for more information you could see [how our document work](HOW_DOC_WORK.md)
+2. Clone the code to the local `git clone git@github.com:apache/seatunnel-website.git`
+3. Run `./tools/build-docs.sh` to fetch and prepare docs form **apache/seatunnel**, for more information you could see [how our document work](HOW_DOC_WORK.md)
 4. Run `npm install` to install the required dependent libraries.
 5. Run `npm run start` in the root directory, you can visit http://localhost:3000 to view the English mode preview of the site
 6. Run `npm run start-zh` in the root directory, you can visit http://localhost:3000 to view the Chinese mode preview of the site
@@ -134,8 +134,36 @@ Located in `src/pages/team`
 ├── team
         ├── index.js
         ├── index.less
-        └── languages.json
+        ├── languages.json
+        └── github-avatars.json
 ```
+
+#### Update Team Member Avatars
+
+Team member avatars are stored as Base64 encoded strings, independent of external GitHub resources. When adding new members or updating avatars:
+
+1. Modify `languages.json`, add new member info to `pmc` or `committer` array:
+
+```json
+{
+  "apacheId": "newmember",
+  "githubId": "newmember",
+  "name": "New Member",
+  "userId": "12345678"
+}
+```
+
+2. Run the avatar fetch script:
+
+```bash
+node tools/fetch-team-avatars.js
+```
+
+The script will:
+- Download all member avatars from GitHub
+- Convert to Base64 and save to `github-avatars.json`
+- Update `userId` field in `languages.json`
+
 
 ### 3.7 User list page modification
 
@@ -167,5 +195,5 @@ Located in `src/pages/versions`
 
 ### 3.9 add a new version for documents
 
-- 1、Run `npm run docusaurus docs:version replace_by_target_version` locally to copy a document.
-- 2、Modify `/src/pages/version/config.json` for the latest and history versions.
+- 1、Run `npm run version replace_by_target_version` locally to copy a document.
+- 2、Modify `/src/pages/download/st_data.json` for the latest download link address.
